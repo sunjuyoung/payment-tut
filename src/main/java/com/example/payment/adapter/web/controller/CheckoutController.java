@@ -45,7 +45,9 @@ public class CheckoutController {
         request.setBuyerId(1L);
         request.setCartId(1L);
         request.setProductIds(List.of(1L, 2L, 3L));
-        request.setSeed(UUID.randomUUID().toString().substring(0,8));
+        request.setSeed(UUID.nameUUIDFromBytes(request.toString().getBytes()).toString());
+
+     ;
 
         CheckoutCommand checkoutCommand = CheckoutCommand.builder()
                 .buyerId(request.getBuyerId())
@@ -72,6 +74,10 @@ public class CheckoutController {
                 request.getOrderId(),
                 request.getAmount()
         );
+        log.info("contorller--------------------------");
+        log.info("paymentKey : " + paymentConfirmCommand.getPaymentKey());
+        log.info("orderId : " + paymentConfirmCommand.getOrderId());
+
 
         PaymentConfirmResult confirm = paymentConfirmUseCase.confirm(paymentConfirmCommand);
         return ResponseEntity.ok().body(new ApiResponse<>("success", HttpStatus.OK, confirm));

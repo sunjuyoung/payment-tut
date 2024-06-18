@@ -1,14 +1,11 @@
 package com.example.payment.adapter.web.domain;
 
-import com.example.payment.adapter.web.domain.enums.NewStatus;
 import com.example.payment.adapter.web.domain.enums.PaymentOrderStatus;
-import com.example.payment.adapter.web.domain.enums.PreviousStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 

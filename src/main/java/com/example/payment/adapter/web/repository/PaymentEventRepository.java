@@ -20,9 +20,9 @@ public interface PaymentEventRepository extends JpaRepository<PaymentEvent, Long
 
 
     //update  where orderId;
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("update PaymentEvent p set p.paymentKey = :paymentKey where p.orderId = :orderId")
-    void updatePaymentKeyByOrderId(@Param("orderId") String orderId, @Param("paymentKey") String paymentKey);
+    void updatePaymentKeyByOrderId( @Param("paymentKey") String paymentKey,@Param("orderId") String orderId);
 
 
 }
