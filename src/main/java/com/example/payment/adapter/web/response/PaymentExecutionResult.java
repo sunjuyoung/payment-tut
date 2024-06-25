@@ -2,7 +2,10 @@ package com.example.payment.adapter.web.response;
 
 import com.example.payment.adapter.web.domain.enums.PSPConfirmStatus;
 import com.example.payment.adapter.web.domain.enums.PaymentMethod;
+import com.example.payment.adapter.web.domain.enums.PaymentOrderStatus;
 import com.example.payment.adapter.web.domain.enums.PaymentType;
+import com.example.payment.adapter.web.service.in.Failure;
+import com.example.payment.adapter.web.service.in.PaymentExtraDetails;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -21,29 +24,22 @@ public class PaymentExecutionResult {
     private boolean isUnknown;
     private boolean isRetryable;
 
-
-
-
-    @Getter @Setter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public  static class PaymentExtraDetails {
-
-        private PaymentType type;
-        private PaymentMethod method;
-        private LocalDateTime approvedAt;
-        private String orderName;
-        private PSPConfirmStatus pspConfirmStatus;
-        private Long totalAmount;
-        private String pspRawData; //승인결과
+    public PaymentOrderStatus paymentOrderStatus() {
+        if (isSuccess()) {
+            return PaymentOrderStatus.SUCCESS;
+        } else if (isFailure()) {
+            return PaymentOrderStatus.FAILURE;
+        } else {
+            throw new IllegalStateException("결제 (orderId: " + getOrderId() + ") 는 올바르지 않은 결제 상태입니다.");
+        }
     }
 
-    @Getter @Setter
-    public  class Failure {
-        private String code;
-        private String message;
-
+    public boolean isSuccess() {
+        return isSuccess;
     }
+    public boolean isFailure() {
+        return isFailure;
+    }
+
 }
 

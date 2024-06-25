@@ -8,9 +8,14 @@ import com.example.payment.adapter.web.domain.enums.PaymentType;
 import com.example.payment.adapter.web.request.TossPaymentConfirmRequest;
 import com.example.payment.adapter.web.response.PaymentExecutionResult;
 import com.example.payment.adapter.web.response.TossPaymentConfirmResponse;
+import com.example.payment.adapter.web.service.in.Failure;
 import com.example.payment.adapter.web.service.in.PaymentConfirmCommand;
+import com.example.payment.adapter.web.service.in.PaymentExtraDetails;
+import com.example.payment.common.exception.PSPConfirmationException;
+import com.example.payment.common.exception.TossPaymentError;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -47,9 +52,16 @@ public class TossPaymentService {
 
                 )
                 .retrieve()
+               .onStatus(statusCode -> statusCode.is4xxClientError() || statusCode.is5xxServerError(), response ->
+                       response.bodyToMono(Failure.class)
+                               .flatMap(failure -> {
+                                   TossPaymentError error = TossPaymentError.get(failure.getCode());
+                                      return Mono.error(new PSPConfirmationException(error.name(), error.getMessage(),error.isRetryableError()));
+                               })
+               )
                 .bodyToMono(TossPaymentConfirmResponse.class)
                 .map(res->{
-                    PaymentExecutionResult.PaymentExtraDetails extraDetails = PaymentExecutionResult.PaymentExtraDetails.builder()
+                    PaymentExtraDetails extraDetails = PaymentExtraDetails.builder()
                             .type(PaymentType.valueOf(res.getType()))
                             .method(PaymentMethod.getPaymentMethod(res.getMethod()))
                             .approvedAt(LocalDateTime.parse(res.getApprovedAt(), DateTimeFormatter.ISO_OFFSET_DATE_TIME))

@@ -80,23 +80,10 @@ public class CheckoutController {
 
 
         PaymentConfirmResult confirm = paymentConfirmUseCase.confirm(paymentConfirmCommand);
+        log.info("confirm Success : " + confirm.getMessage());
         return ResponseEntity.ok().body(new ApiResponse<>("success", HttpStatus.OK, confirm));
 
-//        Mono<ResponseEntity<ApiResponse<String>>> success = tossPaymentService
-//                .executePaymentConfirm(
-//                        tossPaymentConfirmRequest.getPaymentKey(),
-//                        tossPaymentConfirmRequest.getOrderId(),
-//                        tossPaymentConfirmRequest.getAmount().toString()
-//                )
-//                .map(response -> {
-//                    return ResponseEntity.ok().body(new ApiResponse<>("success", HttpStatus.OK, response));
-//                });
 
-
-
-
-
-     //   return success;
     }
 
 }

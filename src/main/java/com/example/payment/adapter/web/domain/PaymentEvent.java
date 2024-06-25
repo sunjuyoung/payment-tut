@@ -2,6 +2,7 @@ package com.example.payment.adapter.web.domain;
 
 import com.example.payment.adapter.web.domain.enums.PaymentMethod;
 import com.example.payment.adapter.web.domain.enums.PaymentType;
+import com.example.payment.adapter.web.service.in.PaymentStatusUpdateCommand;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,7 +42,10 @@ public class PaymentEvent {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
+    @Column(name = "psp_raw_data", columnDefinition = "json")
+    private String pspRawData;  //PSP 로 부터 받은 원시 데이터
 
+    @Column(name = "approved_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime approvedAt;
     private boolean isPaymentDone;
     private Long totalAmount;
@@ -66,5 +70,16 @@ public class PaymentEvent {
         paymentOrder.setPaymentEvent(this);
     }
 
+
+    public void updateExtraDetails(PaymentStatusUpdateCommand command) {
+        this.orderName = command.getExtraDetails().getOrderName();
+        this.paymentMethod = command.getExtraDetails().getMethod();
+        this.approvedAt = command.getExtraDetails().getApprovedAt();
+        this.orderId = command.getOrderId();
+        this.paymentType = command.getExtraDetails().getType();
+        this.pspRawData = command.getExtraDetails().getPspRawData();
+
+
+    }
 
 }

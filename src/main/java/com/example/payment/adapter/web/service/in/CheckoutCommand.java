@@ -19,6 +19,4 @@ public class CheckoutCommand {
     private List<Long> productIds;
     private String idempotencyKey;
 
-
-
 }

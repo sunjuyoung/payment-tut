@@ -27,32 +27,12 @@ public class PaymentStatusUpdateCommand {
     }
     //valid PaymentOrderStatus값이 failure 라면  failure는 null이 아니어야 한다.
     public boolean isValidFailure(){
-        return status == PaymentOrderStatus.FAIL ? failure != null : true;
+        return status == PaymentOrderStatus.FAILURE ? failure != null : true;
     }
 
 
-    @Getter
-    @Setter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class PaymentExtraDetails {
 
-        private PaymentType type;
-        private PaymentMethod method;
-        private LocalDateTime approvedAt;
-        private String orderName;
-        private PSPConfirmStatus pspConfirmStatus;
-        private Long totalAmount;
-        private String pspRawData; //승인결과
-    }
 
-    @Getter @Setter
-    public  class Failure {
-        private String code;
-        private String message;
-
-    }
 
 
 }

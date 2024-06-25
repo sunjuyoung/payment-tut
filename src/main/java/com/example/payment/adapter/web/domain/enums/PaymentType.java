@@ -9,7 +9,13 @@ public enum PaymentType {
 
 
 
-    NORMAL("일반 결제");
+    NORMAL("일반 결제"),
+
+
+    TEST_PAYMENT("테스트 결제");
+
+
+
 
     private String description;
 

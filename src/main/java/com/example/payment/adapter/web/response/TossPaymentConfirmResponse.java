@@ -1,15 +1,12 @@
 package com.example.payment.adapter.web.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Data
 public class TossPaymentConfirmResponse {
     private String version;
     private String paymentKey;
@@ -183,5 +180,51 @@ public class TossPaymentConfirmResponse {
         private String requestedAt;
 
         // Getters and setters
+    }
+
+    //toString
+    @Override
+    public String toString() {
+        return " {" +
+                "version='" + version + '\'' +
+                ", paymentKey='" + paymentKey + '\'' +
+                ", type='" + type + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", orderName='" + orderName + '\'' +
+                ", mId='" + mId + '\'' +
+                ", currency='" + currency + '\'' +
+                ", method='" + method + '\'' +
+                ", totalAmount=" + totalAmount +
+                ", balanceAmount=" + balanceAmount +
+                ", status='" + status + '\'' +
+                ", requestedAt='" + requestedAt + '\'' +
+                ", approvedAt='" + approvedAt + '\'' +
+                ", useEscrow=" + useEscrow +
+                ", lastTransactionKey='" + lastTransactionKey + '\'' +
+                ", suppliedAmount=" + suppliedAmount +
+                ", vat=" + vat +
+                ", cultureExpense=" + cultureExpense +
+                ", taxFreeAmount=" + taxFreeAmount +
+                ", taxExemptionAmount=" + taxExemptionAmount +
+                ", cancels=" + cancels +
+                ", cancelAmount=" + cancelAmount +
+                ", cancelReason='" + cancelReason + '\'' +
+                ", cancelTaxFreeAmount=" + cancelTaxFreeAmount +
+                ", cancelTaxExemptionAmount=" + cancelTaxExemptionAmount +
+                ", refundableAmount=" + refundableAmount +
+                ", easyPayDiscountAmount=" + easyPayDiscountAmount +
+                ", canceledAt='" + canceledAt + '\'' +
+                ", transactionKey='" + transactionKey + '\'' +
+                ", receiptKey='" + receiptKey + '\'' +
+                ", cancelStatus='" + cancelStatus + '\'' +
+                ", cancelRequestId='" + cancelRequestId + '\'' +
+                ", isPartialCancelable=" + isPartialCancelable +
+                ", card=" + card +
+                ", virtualAccount=" + virtualAccount +
+                ", refundReceiveAccount=" + refundReceiveAccount +
+                ", secret='" + secret + '\'' +
+                ", mobilePhone=" + mobilePhone +
+                ", receiptUrl='" + receiptUrl + '\'' +
+                '}';
     }
 }
